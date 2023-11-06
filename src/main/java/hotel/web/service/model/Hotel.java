@@ -12,9 +12,9 @@ public class Hotel {
 	private int etoiles;
 	private Adresse adresse;
 	private Map<Integer, String> agences = new HashMap<Integer,String>(); //(id,mot de pass)
-	
-	public ArrayList<Chambre> chambres= new ArrayList<Chambre> ();
-	//public ArrayList<Agence> agences= new ArrayList<Agence> ();
+	private ArrayList<Offre> offres= new ArrayList<>();
+	private ArrayList<Chambre> chambres= new ArrayList<> ();
+	//private ArrayList<Agence> agences= new ArrayList<Agence> ();
 	
 	
 		/* CONSTRUCTOR */
@@ -27,6 +27,15 @@ public class Hotel {
 
 	
 		/* METHODES */
+	public Offre getOffre(int id) {
+		for(Offre o: this.offres) {
+			if(id==o.getId()) {
+				return o;
+			}
+		}
+		return null;
+	}
+	
 	public void addChambre(Chambre chambre) {
 		chambres.add(chambre);
 	}

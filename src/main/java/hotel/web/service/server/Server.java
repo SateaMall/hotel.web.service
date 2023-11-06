@@ -6,6 +6,7 @@ import hotel.web.service.model.Adresse;
 import hotel.web.service.model.Chambre;
 import hotel.web.service.model.Hotel;
 import hotel.web.service.model.Reservation;
+import hotel.web.service.reservation.ReservationServiceImpl;
 import hotel.web.service.services.HotelServiceImpl;
 import jakarta.xml.ws.Endpoint;
 
@@ -13,7 +14,7 @@ public class Server {
 
 	public static void main(String[] args) {
 		
-		Adresse adresse= new Adresse("Germany", "Cologne", "570 Route de Ganges", "Hôtel de 4 seisons","654654,65465 654654,654654 ", 34090);
+		Adresse adresse= new Adresse("Germany", "Cologne", "570 Route de Ganges", "Hï¿½tel de 4 seisons","654654,65465 654654,654654 ", 34090);
 		
 		Hotel hotel= new Hotel("4 Seasons", "Lux",5, adresse);
 		
@@ -43,7 +44,10 @@ public class Server {
         
         
 		Endpoint.publish("http://localhost:8080/seasonsService", new HotelServiceImpl(hotel));
-		System.out.println("Server is running!");
+		System.out.println("Server Service1 is running!");
+		
+		Endpoint.publish("http://localhost:8080/seasonsService2", new ReservationServiceImpl());
+		System.out.println("Server Service2 is running!");
 	}
 
 }

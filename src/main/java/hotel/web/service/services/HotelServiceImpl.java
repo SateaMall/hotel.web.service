@@ -9,6 +9,7 @@ import hotel.web.service.exceptions.NoRoomFoundException;
 import hotel.web.service.model.Adresse;
 import hotel.web.service.model.Chambre;
 import hotel.web.service.model.Hotel;
+import hotel.web.service.model.Offre;
 import hotel.web.service.model.Reservation;
 import jakarta.jws.WebService;
 
@@ -26,24 +27,26 @@ public class HotelServiceImpl implements HotelService{
 	
 	
 		/* METHODES */
-	public ArrayList<Chambre> getChambresDispo(int id, String mdp, LocalDate date_deb, LocalDate date_fin, int nbrPersonne) throws NoRoomFoundException, LoginIdentificationBadException {
-		 ArrayList<Chambre> chambresDispo= new ArrayList<>();
+	public ArrayList<Offre> getChambresDispo(int id, String mdp, LocalDate date_deb, LocalDate date_fin, int nbrPersonne) throws NoRoomFoundException, LoginIdentificationBadException {
+		 ArrayList<Offre> offres= new ArrayList<>();
 		if(!signIn(id,mdp)) {throw new LoginIdentificationBadException(); }
 		for(Chambre c: hotel.getChambres())
 		{
 			boolean chambreDisponible = true;
 			for(Reservation r: c.getReservations()) {
-                if (!r.dateOverlap(date_deb,date_fin)) {
+                if (r.dateOverlap(date_deb,date_fin)) {
                     chambreDisponible = false;
                     break; //La chambre n'est pas disponible
                 }
 			}
-			if(chambreDisponible) {chambresDispo.add(c);}
+			if(chambreDisponible) {
+				Offre offre= new Offre(c.getCapacite(),date_deb,date_fin, c.getPrix_base(), c);
+				offres.add(offre);}
 		}
-        if (chambresDispo.isEmpty()) {
+        if (offres.isEmpty()) {
             throw new NoRoomFoundException(); // Aucune chambre n'est disponible
         }
-        return chambresDispo;
+        return offres;
 	}
 	
 	public Adresse returnHotelAdr() {
@@ -64,7 +67,7 @@ public class HotelServiceImpl implements HotelService{
 		  if (agences.containsKey(id)) {
 	            String storedPassword = agences.get(id);
 	            if (storedPassword.equals(mdp)) {
-	                return true; //L'utilisateur est authentifié avec succès
+	                return true; //L'utilisateur est authentifiï¿½ avec succï¿½s
 	            }
 	        }
 	        return false; // L'utilisateur n'existe pas

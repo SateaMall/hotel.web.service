@@ -4,24 +4,29 @@ import java.time.LocalDate;
 
 public class Reservation {
 		/* ATTRIBUTES */
+	private static int count =0;
+	private final int id;
 	private String nom;
 	private String prenom;
-	private double prix_paye;
 	private LocalDate date_arrive;
 	private LocalDate date_depart;
 	private Chambre chambre;
+	private int nbr_telephone;
+
 
 	
 		/* CONSTRUCTOR */
-	public Reservation(String nom, String prenom, LocalDate date_arrive, LocalDate date_depart, Chambre chambre, double reduc) {// avec agence
+	public Reservation(String nom, String prenom, LocalDate date_arrive, LocalDate date_depart, Chambre chambre, int nbr_telephone) {// avec agence
 		this.nom = nom;
 		this.prenom = prenom;
 		this.date_arrive = date_arrive;
 		this.date_depart = date_depart;
-		prix_paye=chambre.getPrix_base()-reduc; //Prix avec reduc
+		this.nbr_telephone= nbr_telephone;
+		this.id = count;
+		count++;
 	}
 	
-	/* METHODES */
+		/* METHODES */
 	public boolean dateOverlap(LocalDate dep,LocalDate arv) {
 		Reservation r1=this;
 		if (!(dep.isBefore(r1.date_arrive) || arv.isAfter(r1.date_depart))) {
@@ -33,26 +38,24 @@ public class Reservation {
 	public String getNom() {
 		return nom;
 	}
-
 	public String getPrenom() {
 		return prenom;
 	}
-
-	public double getPrix_paye() {
-		return prix_paye;
-	}
-	
-	
 	public LocalDate getDate_arrive() {
 		return date_arrive;
 	}
-
 	public LocalDate getDate_depart() {
 		return date_depart;
 	}
-
 	public Chambre getChambre() {
 		return chambre;
+	}
+
+	public int getNbr_telephone() {
+		return nbr_telephone;
+	}
+	public int getId() {
+		return id;
 	}
 
 }

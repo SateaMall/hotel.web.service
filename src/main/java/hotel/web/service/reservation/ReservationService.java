@@ -1,29 +1,23 @@
-package hotel.web.service.services;
+package hotel.web.service.reservation;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import hotel.web.service.exceptions.LoginIdentificationBadException;
 import hotel.web.service.exceptions.NoRoomFoundException;
+import hotel.web.service.exceptions.RoomAlreadyReservedException;
 import hotel.web.service.model.Adresse;
 import hotel.web.service.model.Chambre;
 import hotel.web.service.model.Hotel;
-import hotel.web.service.model.Offre;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
 
 @WebService
-public interface HotelService {
-	
+public interface ReservationService {
+
 	/* METHODES */
 	@WebMethod
-	ArrayList<Offre> getChambresDispo(int id, String mdp,LocalDate date_deb, LocalDate date_fin, int nbrPersonne) throws NoRoomFoundException, LoginIdentificationBadException;
+	public int reserver(int id, String mdp, int id_offre, String nom, String pre_nom, int nbr_telephone) throws LoginIdentificationBadException, RoomAlreadyReservedException;
+
 	
-	@WebMethod
-	String Connectiontest(String message) ;
-	
-	@WebMethod
-	Adresse returnHotelAdr();
-	
-	@WebMethod
-	Hotel returnHotel();
 }
